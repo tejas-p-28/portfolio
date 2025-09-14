@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tejas Patil | Creative Technologist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: #0D0C1D;
+            --text-color: #E0E0E0;
+            --heading-color: #FFFFFF;
+            --accent-color: #4BC8D6; 
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Sora', sans-serif;
+            background-color: var(--background);
+            color: var(--text-color);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .background-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(300deg, #0D0C1D, #3C1053, #4BC8D6, #AD5389);
+            background-size: 400% 400%;
+            animation: gradientAnimation 25s ease infinite;
+            filter: blur(80px); 
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        h1, h2, h3 {
+            font-weight: 700;
+            color: var(--heading-color);
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(13, 12, 29, 0.5); 
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .logo span { color: var(--accent-color); }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .hero {
+            padding-top: 180px;
+            padding-bottom: 120px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--heading-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            max-width: 750px;
+            margin: 0 auto 2.5rem;
+            color: #b0b0d1;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: transparent;
+            color: var(--accent-color);
+            padding: 0.8rem 2rem;
+            border: 2px solid var(--accent-color);
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: var(--accent-color);
+            color: var(--background);
+            box-shadow: 0 0 20px var(--accent-color);
+        }
+        
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 30px rgba(75, 200, 214, 0.2);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .skill-card { text-align: center; }
+
+        .skill-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-item {
+            padding: 2.5rem;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .experience-header h3 {
+            font-size: 1.75rem;
+            color: var(--accent-color);
+        }
+        
+        .experience-header p {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .experience-item ul {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+
+        .experience-item li {
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .experience-item li::before {
+            content: '›';
+            position: absolute;
+            left: -1.5rem;
+            color: var(--accent-color);
+            font-weight: 700;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .project-card {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-card h3 {
+            font-size: 1.75rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        
+        .tech-tag {
+            background-color: rgba(75, 200, 214, 0.1);
+            color: var(--accent-color);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .contact-content { text-align: center; }
+        .contact-content p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 1.5rem auto 2.5rem;
+        }
+
+        /* --- NEW Social Links Styles --- */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .social-links svg {
+            width: 28px;
+            height: 28px;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero-subtitle { font-size: 1.1rem; }
+            .section-title { font-size: 2rem; }
+            .experience-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-gradient"></div>
+
+    <header>
+        <nav class="container">
+            <div class="logo">Tejas<span>.</span>Patil</div>
+            <ul class="nav-links">
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero container">
+            <h1>Building the Future, One Line at a Time</h1>
+            <p class="hero-subtitle">Creative Technologist from India, blending Data Science, AI, and IoT to craft innovative and intelligent solutions that push the boundaries of technology.</p>
+            <a href="#projects" class="cta-button">See My Work</a>
+        </section>
+
+        <section id="skills" class="container">
+            <h2 class="section-title">Core Competencies</h2>
+            <div class="skills-grid">
+                <div class="skill-card glass-card">
+                    <h3>Performance Monitoring</h3>
+                    <p>Optimizing ML services with tools like Grafana to dramatically reduce downtime and resolve issues faster.</p>
+                </div>
+                <div class="skill-card glass-card">
+                    <h3>Computer Vision</h3>
+                    <p>Enhancing imaging systems with advanced camera calibration and building 3D models with NeRF.</p>
+                </div>
+                <div class="skill-card glass-card">
+                    <h3>Generative AI</h3>
+                    <p>Fine-tuning Stable Diffusion, ControlNet, and custom GANs to improve dataset quality and model accuracy.</p>
+                </div>
+                <div class="skill-card glass-card">
+                    <h3>Hardware & IoT</h3>
+                    <p>Migrating applications to Raspberry Pi 5 and integrating hardware for interactive user feedback.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="container">
+            <h2 class="section-title">Professional Experience</h2>
+            <div class="experience-item glass-card">
+                <div class="experience-header">
+                    <h3>System Performance & Monitoring</h3>
+                    <p>Pune | 06/2024 – Present</p>
+                </div>
+                <ul>
+                    <li>Improved ML service monitoring with Grafana, reducing downtime by 30% and accelerating issue resolution by 25%.</li>
+                    <li>Enhanced camera calibration, increasing distance accuracy by 25% and reducing false readings by 40%.</li>
+                    <li>Built 3D dental models with NeRF, cutting reconstruction time by 35% and improving patient diagnosis.</li>
+                    <li>Boosted dataset quality with a custom GAN, improving model training accuracy by 40%.</li>
+                    <li>Fine-tuned Stable Diffusion & ControlNet, increasing dental smile correction accuracy by 25%.</li>
+                    <li>Migrated applications to Raspberry Pi 5, improving processing speed by 20% and user experience.</li>
+                    <li>Built an LLM-powered chatbot, automating 60% of customer queries and reducing response time by 45%.</li>
+                </ul>
+            </div>
+        </section>
+
+
+        <section id="projects" class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card glass-card">
+                    <h3>3D Dental Model Reconstruction with NeRF</h3>
+                    <p>Developed a computer vision pipeline to construct high-fidelity 3D dental models from 2D images. This project significantly cut down reconstruction time by 35%, providing dentists with faster, more accurate diagnostic tools.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Computer Vision</span><span class="tech-tag">NeRF</span><span class="tech-tag">Python</span><span class="tech-tag">3D Modeling</span>
+                    </div>
+                </div>
+                <div class="project-card glass-card">
+                    <h3>Generative AI for Dental Image Enhancement</h3>
+                    <p>Fine-tuned Stable Diffusion and ControlNet models to perform accurate smile corrections on dental images. Also developed a custom GAN to augment training datasets, boosting overall model accuracy by 40%.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Generative AI</span><span class="tech-tag">Stable Diffusion</span><span class="tech-tag">GANs</span><span class="tech-tag">PyTorch</span>
+                    </div>
+                </div>
+                <div class="project-card glass-card">
+                    <h3>Interactive IoT Display on Raspberry Pi 5</h3>
+                    <p>Engineered a user feedback system by migrating applications to a Raspberry Pi 5 and configuring an Adafruit screen via GPIO. The system displays interactive visual cues, like animated smiles, to enhance user engagement during photo capture.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Raspberry Pi 5</span><span class="tech-tag">IoT</span><span class="tech-tag">Hardware</span><span class="tech-tag">Python</span><span class="tech-tag">GPIO</span>
+                    </div>
+                </div>
+                <div class="project-card glass-card">
+                    <h3>Automated Customer Support Chatbot</h3>
+                    <p>Built and deployed an intelligent, LLM-powered chatbot that successfully automated 60% of customer support queries. This system drastically reduced response times by 45% and freed up human agents to handle more complex issues.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">LLM</span><span class="tech-tag">Chatbot</span><span class="tech-tag">Automation</span><span class="tech-tag">LangChain</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="container">
+            <div class="contact-content">
+                <h2 class="section-title">Let's Create Together</h2>
+                <p>I am currently available for freelance projects and collaborations. If you have an idea that needs a blend of software, data, and hardware, I would love to hear from you.</p>
+                <a href="mailto:tejas.patiltp2802@gmail.com" class="cta-button">GET IN TOUCH</a>
+
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/tejas-patil-623430218/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" role="img">
+                            <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.25 6.5 1.75 1.75 0 016.5 8.25zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93-.94 0-1.62.61-1.62 1.93V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.38 1.02 3.38 3.56z"></path>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/tejas-p-28" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" role="img">
+                            <path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69a3.6 3.6 0 01.1-2.64s.84-.27 2.75 1.02a9.58 9.58 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.4.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0022 12C22 6.48 17.52 2 12 2z"></path>
+                        </svg>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
