@@ -174,11 +174,14 @@
             gap: 1.5rem;
         }
         
-        .skill-card { text-align: center; }
-
         .skill-card h3 {
             font-size: 1.25rem;
             margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+        
+        .skill-card p {
+            font-size: 0.95rem;
         }
 
         .experience-item {
@@ -262,7 +265,6 @@
             margin: 1.5rem auto 2.5rem;
         }
 
-        /* --- NEW Social Links Styles --- */
         .social-links {
             display: flex;
             justify-content: center;
@@ -286,6 +288,88 @@
             height: 28px;
         }
         
+        /* --- NEW REGISTRATION FORM STYLES --- */
+        #registration-form {
+            max-width: 800px;
+            margin: 2.5rem auto 0;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-family: 'Sora', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(75, 200, 214, 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 0.8rem 2rem;
+            background-color: var(--accent-color);
+            color: var(--background);
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            box-shadow: 0 0 20px var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        #form-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none; /* Hidden by default */
+            font-weight: 600;
+        }
+        #form-message.success {
+            background-color: rgba(75, 200, 214, 0.1);
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+        }
+        #form-message.error {
+            background-color: rgba(214, 75, 75, 0.1);
+            color: #d64b4b;
+            border: 1px solid #d64b4b;
+        }
+
+
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .hero h1 { font-size: 2.8rem; }
@@ -322,16 +406,32 @@
             <h2 class="section-title">Core Competencies</h2>
             <div class="skills-grid">
                 <div class="skill-card glass-card">
-                    <h3>Performance Monitoring</h3>
-                    <p>Optimizing ML services with tools like Grafana to dramatically reduce downtime and resolve issues faster.</p>
+                    <h3>Programming Languages</h3>
+                    <p>Python, JavaScript, HTML, CSS</p>
                 </div>
                 <div class="skill-card glass-card">
-                    <h3>Computer Vision</h3>
-                    <p>Enhancing imaging systems with advanced camera calibration and building 3D models with NeRF.</p>
+                    <h3>Data Science & AI</h3>
+                    <p>Machine Learning, Deep Learning, Data Analytics, Statistics, Generative AI, LLM Chatbots</p>
+                </div>
+                 <div class="skill-card glass-card">
+                    <h3>Cloud & Big Data</h3>
+                    <p>GCP, Databricks, Apache Spark, Apache Hadoop</p>
                 </div>
                 <div class="skill-card glass-card">
-                    <h3>Generative AI</h3>
-                    <p>Fine-tuning Stable Diffusion, ControlNet, and custom GANs to improve dataset quality and model accuracy.</p>
+                    <h3>Databases</h3>
+                    <p>SQL (MySQL, PostgreSQL), NoSQL (MongoDB), TimescaleDB</p>
+                </div>
+                <div class="skill-card glass-card">
+                    <h3>Frameworks</h3>
+                    <p>OpenCV, Django, Flask, LangChain, Nerfstudio, Selenium</p>
+                </div>
+                <div class="skill-card glass-card">
+                    <h3>Libraries</h3>
+                    <p>Pandas, Numpy, Matplotlib, Seaborn, Scikit-Learn, TensorFlow, Keras, Transformers</p>
+                </div>
+                <div class="skill-card glass-card">
+                    <h3>DevOps & Tools</h3>
+                    <p>GitHub, GitLab, Grafana, Linux, Shell Scripting</p>
                 </div>
                 <div class="skill-card glass-card">
                     <h3>Hardware & IoT</h3>
@@ -358,7 +458,6 @@
                 </ul>
             </div>
         </section>
-
 
         <section id="projects" class="container">
             <h2 class="section-title">Featured Projects</h2>
@@ -397,9 +496,45 @@
         <section id="contact" class="container">
             <div class="contact-content">
                 <h2 class="section-title">Let's Create Together</h2>
-                <p>I am currently available for freelance projects and collaborations. If you have an idea that needs a blend of software, data, and hardware, I would love to hear from you.</p>
-                <a href="mailto:tejas.patiltp2802@gmail.com" class="cta-button">GET IN TOUCH</a>
-
+                <p>I am currently available for freelance projects and collaborations. If you have an idea that needs a blend of software, data, and hardware, please fill out the form below to get in touch.</p>
+                
+                <form id="registration-form" name="submit-to-google-sheet">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="project-type">Type of Project</label>
+                        <select id="project-type" name="ProjectType">
+                            <option value="Data Science">Data Science</option>
+                            <option value="Generative AI">Generative AI</option>
+                            <option value="IoT/Hardware">IoT/Hardware</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Consultation">Consultation</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                     <div class="form-group">
+                        <label for="budget">Estimated Budget (USD)</label>
+                        <select id="budget" name="Budget">
+                            <option value="Not Specified">Prefer not to say</option>
+                            <option value="< $1000">&lt; $1,000</option>
+                            <option value="$1000 - $5000">$1,000 - $5,000</option>
+                            <option value="$5000+">$5,000+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="details">Project Details</label>
+                        <textarea id="details" name="Details" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Inquiry</button>
+                </form>
+                <div id="form-message"></div>
+                
                 <div class="social-links">
                     <a href="https://www.linkedin.com/in/tejas-patil-623430218/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" role="img">
@@ -416,6 +551,33 @@
             </div>
         </section>
     </main>
+
+    <script>
+      const form = document.forms['submit-to-google-sheet'];
+      const messageDiv = document.getElementById('form-message');
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        
+        // Show a "Submitting..." message
+        messageDiv.textContent = "Submitting, please wait...";
+        messageDiv.style.display = 'block';
+        messageDiv.className = 'success'; // Use success style for waiting message
+        
+        const scriptURL = scriptURL        
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+          .then(response => {
+              messageDiv.textContent = "Thank you for your inquiry! I will get back to you shortly.";
+              messageDiv.className = 'success';
+              form.reset(); // Clear the form fields
+          })
+          .catch(error => {
+              messageDiv.textContent = "Oops! Something went wrong. Please try again later.";
+              messageDiv.className = 'error';
+              console.error('Error!', error.message);
+          });
+      });
+    </script>
 
 </body>
 </html>
