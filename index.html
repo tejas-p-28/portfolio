@@ -553,6 +553,9 @@
     </main>
 
     <script>
+      // Define the SCRIPT_URL variable
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbypfnAOwqyWgUrq0zxT2OIAEwuwHkkhzlW4TpyMPY-OYyMWPIIn70iSFQognSxo0wjPCw/exec";
+      
       const form = document.forms['submit-to-google-sheet'];
       const messageDiv = document.getElementById('form-message');
 
@@ -564,7 +567,7 @@
         messageDiv.style.display = 'block';
         messageDiv.className = 'success'; // Use success style for waiting message
         
-        const scriptURL = scriptURL        
+        const scriptURL = SCRIPT_URL;        
         fetch(scriptURL, { method: 'POST', body: new FormData(form)})
           .then(response => {
               messageDiv.textContent = "Thank you for your inquiry! I will get back to you shortly.";
