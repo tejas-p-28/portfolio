@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Blog Posts | Tejas Patil</title>
+    <style>
+        body { background-color: #1a161f; color: #d1c9e0; font-family: 'Sora', sans-serif; padding: 40px; }
+        .container { max-width: 900px; margin: auto; }
+        h1 { color: #ff8c42; margin-bottom: 2rem; }
+        .blog-post { background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 15px; margin-bottom: 2rem; }
+        .blog-post h2 { margin-bottom: 1rem; }
+        .blog-post a { color: #ff8c42; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>All Blog Posts</h1>
+        {% for post in all_posts %}
+            <div class="blog-post">
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.summary }}</p>
+                <a href="{{ post.get_absolute_url }}" target="_blank" rel="noopener noreferrer">Read More &rarr;</a>
+            </div>
+        {% empty %}
+            <p>No blog posts have been written yet.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
