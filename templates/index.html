@@ -43,7 +43,7 @@
             </div>
             <div class="hero-image">
                 {% if homepage_content.hero_image %}
-                    <img src="{{ homepage_content.hero_image.url }}" alt="Abstract AI and Data Visualization">
+                    <img src="{% static 'images/tech_image.png' %}" alt="Abstract AI and Data Visualization">
                 {% else %}
                     <img src="{% static 'images/tech_image.png' %}" alt="Abstract AI and Data Visualization">
                 {% endif %}
