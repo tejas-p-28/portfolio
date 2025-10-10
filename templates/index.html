@@ -9,6 +9,69 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        /* --- ADDED/MODIFIED STYLES FOR MOBILE NAV --- */
+        .mobile-nav-controls {
+            display: none; /* Hidden by default on desktop */
+            align-items: center;
+            gap: 1rem;
+        }
+
+        #hamburger-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001; /* Ensure it's on top */
+        }
+
+        #hamburger-btn svg {
+            stroke: var(--heading-color);
+            width: 28px;
+            height: 28px;
+        }
+
+        @media (max-width: 992px) {
+            /* Hide the default nav links list */
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%; 
+                right: 0; /* Align container to the right edge */
+                /* REMOVED: width: 100%; */
+                max-width: 320px; 
+                background-color: rgba(30, 25, 35, 0.9);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                align-items: flex-start; /* Align links to the left inside the container */
+                padding: 1rem;
+                border-bottom: 1px solid var(--glass-border);
+                border-left: 1px solid var(--glass-border);
+                border-radius: 0 0 0 15px; 
+                box-shadow: -10px 10px 30px rgba(0,0,0,0.2);
+            }
+
+            /* Hide the original counter when in mobile view */
+            .nav-links .nav-counter {
+                display: none;
+            }
+
+            /* This class is toggled by JavaScript to show the menu */
+            .nav-links.mobile-menu-open {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: left; /* Align text to the left for readability */
+            }
+
+            /* Show the mobile controls container */
+            .mobile-nav-controls {
+                display: flex;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -19,22 +82,38 @@
     <header>
         <nav class="container">
             <div class="logo">Tejas<span>.</span>Patil</div>
-            <ul class="nav-links">
+            
+            <!-- Main navigation links list -->
+            <ul class="nav-links" id="nav-links-list">
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#blog">Blog</a></li>
                 <li><a href="#resume">Resume</a></li>
+                <!-- This counter is for desktop view -->
                 <li class="nav-counter">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     <span id="visit-counter-nav">0</span>
                 </li>
                 <li class="nav-cta"><a href="#contact">Contact</a></li>
             </ul>
+
+            <!-- Mobile-specific controls -->
+            <div class="mobile-nav-controls">
+                <!-- This counter is for mobile view -->
+                <div class="nav-counter">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <span id="visit-counter-nav-mobile">0</span>
+                </div>
+                <button id="hamburger-btn" aria-label="Toggle Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
         </nav>
     </header>
 
     <main>
+        <!-- The rest of your main content remains the same... -->
         <section id="home" class="hero container">
             <div class="hero-text">
                 <h1>{{ homepage_content.title|default:"Building the Future" }}</h1>
@@ -43,7 +122,7 @@
             </div>
             <div class="hero-image">
                 {% if homepage_content.hero_image %}
-                    <img src="{% static 'images/tech_image.png' %}" alt="Abstract AI and Data Visualization">
+                    <img src="{{ homepage_content.hero_image.url }}" alt="Abstract AI and Data Visualization">
                 {% else %}
                     <img src="{% static 'images/tech_image.png' %}" alt="Abstract AI and Data Visualization">
                 {% endif %}
@@ -163,19 +242,19 @@
         </section>
 
         <section id="resume" class="container">
-            <div class="glass-card fade-in">
-               <h2 class="section-title">My Resume</h2>
-               <p>My resume is always up-to-date. View it online or download a PDF copy to see how I can contribute to your team.</p>
-               <div class="resume-buttons">
-                   {% if resume and resume.resume_file %}
-                       <a href="{{ resume.resume_file.url }}" target="_blank" rel="noopener noreferrer" class="cta-button secondary">View Resume</a>
-                       <a href="{{ resume.resume_file.url }}" class="cta-button" download>Download CV</a>
-                   {% else %}
-                       <p>Resume will be uploaded soon!</p>
-                   {% endif %}
-               </div>
-           </div>
-       </section>
+             <div class="glass-card fade-in">
+                <h2 class="section-title">My Resume</h2>
+                <p>My resume is always up-to-date. View it online or download a PDF copy to see how I can contribute to your team.</p>
+                <div class="resume-buttons">
+                    {% if resume and resume.resume_file %}
+                        <a href="{{ resume.resume_file.url }}" target="_blank" rel="noopener noreferrer" class="cta-button secondary">View Resume</a>
+                        <a href="{{ resume.resume_file.url }}" class="cta-button" download>Download CV</a>
+                    {% else %}
+                        <p>Resume will be uploaded soon!</p>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
 
         <section id="contact" class="container">
             <div class="contact-content">
@@ -183,7 +262,7 @@
                 <p class="fade-in">I thrive on building innovative solutions at the intersection of data, AI, and hardware. If you're working on something exciting in this space, I'd love to connect and exchange ideas.</p>
                 
                 <form method="POST" action="{% url 'home' %}#contact" id="registration-form" class="fade-in">
-                    {% csrf_token %} <!-- Important for security! -->
+                    {% csrf_token %}
                 
                     {% for field in form %}
                         <div class="form-group">
@@ -207,7 +286,6 @@
                         Thank you for your inquiry! I will get back to you shortly.
                     </div>
                 {% endif %}
-                
             </div>
         </section>
     </main>
@@ -233,6 +311,14 @@
     </footer>
 
     <script>
+      // --- ADDED JAVASCRIPT FOR HAMBURGER MENU ---
+      const hamburgerBtn = document.getElementById('hamburger-btn');
+      const navLinksList = document.getElementById('nav-links-list');
+
+      hamburgerBtn.addEventListener('click', () => {
+          navLinksList.classList.toggle('mobile-menu-open');
+      });
+
       // --- Scroll Fade-in Animation ---
       const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
@@ -268,9 +354,11 @@
           }
       });
 
-      // --- Website Visit Counter ---
+      // --- UPDATED Website Visit Counter ---
       window.addEventListener('DOMContentLoaded', (event) => {
-          const counterElement = document.getElementById('visit-counter-nav');
+          const desktopCounter = document.getElementById('visit-counter-nav');
+          const mobileCounter = document.getElementById('visit-counter-nav-mobile');
+          
           let visitCount = localStorage.getItem('page_view');
 
           if (visitCount) {
@@ -279,11 +367,16 @@
               visitCount = 1;
           }
           localStorage.setItem("page_view", visitCount);
-          if(counterElement) {
-            counterElement.textContent = visitCount;
+
+          if(desktopCounter) {
+            desktopCounter.textContent = visitCount;
+          }
+          if(mobileCounter) {
+            mobileCounter.textContent = visitCount;
           }
       });
     </script>
 
 </body>
 </html>
+
