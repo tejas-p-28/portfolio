@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
-        /* --- ADDED/MODIFIED STYLES FOR MOBILE NAV --- */
+        /* --- Styles for Mobile Nav --- */
         .mobile-nav-controls {
             display: none; /* Hidden by default on desktop */
             align-items: center;
@@ -22,7 +22,7 @@
             border: none;
             cursor: pointer;
             padding: 0.5rem;
-            z-index: 1001; /* Ensure it's on top */
+            z-index: 1001;
         }
 
         #hamburger-btn svg {
@@ -31,19 +31,61 @@
             height: 28px;
         }
 
+        /* --- STYLES FOR GITHUB STATS SECTION --- */
+        .github-stats-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .github-stats-grid img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        /* --- STYLES FOR EDUCATION TABLE --- */
+        .education-table {
+            width: 100%;
+            border-collapse: collapse; /* Removes space between borders */
+        }
+
+        .education-table th, .education-table td {
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .education-table thead th {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .education-table tbody tr:last-child td {
+            border-bottom: none; /* Remove border from the last row */
+        }
+
+        .education-table td:first-child { /* Degree */
+            font-weight: 600;
+            color: var(--heading-color);
+        }
+
+
         @media (max-width: 992px) {
-            /* Hide the default nav links list */
             .nav-links {
                 display: none;
                 position: absolute;
                 top: 100%; 
-                right: 0; /* Align container to the right edge */
-                /* REMOVED: width: 100%; */
-                max-width: 320px; 
+                right: 0;
+                min-width: 280px;
                 background-color: rgba(30, 25, 35, 0.9);
                 backdrop-filter: blur(15px);
                 flex-direction: column;
-                align-items: flex-start; /* Align links to the left inside the container */
+                align-items: flex-start;
                 padding: 1rem;
                 border-bottom: 1px solid var(--glass-border);
                 border-left: 1px solid var(--glass-border);
@@ -51,22 +93,19 @@
                 box-shadow: -10px 10px 30px rgba(0,0,0,0.2);
             }
 
-            /* Hide the original counter when in mobile view */
             .nav-links .nav-counter {
                 display: none;
             }
 
-            /* This class is toggled by JavaScript to show the menu */
             .nav-links.mobile-menu-open {
                 display: flex;
             }
 
             .nav-links li {
                 width: 100%;
-                text-align: left; /* Align text to the left for readability */
+                text-align: left;
             }
 
-            /* Show the mobile controls container */
             .mobile-nav-controls {
                 display: flex;
             }
@@ -87,10 +126,11 @@
             <ul class="nav-links" id="nav-links-list">
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#experience">Experience</a></li>
+                <li><a href="#education">Education</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#github-stats">GitHub</a></li>
                 <li><a href="#blog">Blog</a></li>
                 <li><a href="#resume">Resume</a></li>
-                <!-- This counter is for desktop view -->
                 <li class="nav-counter">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     <span id="visit-counter-nav">0</span>
@@ -100,7 +140,6 @@
 
             <!-- Mobile-specific controls -->
             <div class="mobile-nav-controls">
-                <!-- This counter is for mobile view -->
                 <div class="nav-counter">
                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     <span id="visit-counter-nav-mobile">0</span>
@@ -113,7 +152,7 @@
     </header>
 
     <main>
-        <!-- The rest of your main content remains the same... -->
+        <!-- Home Section -->
         <section id="home" class="hero container">
             <div class="hero-text">
                 <h1>{{ homepage_content.title|default:"Building the Future" }}</h1>
@@ -129,6 +168,7 @@
             </div>
         </section>
 
+        <!-- Skills Section -->
         <section id="skills" class="container">
             <h2 class="section-title fade-in">Core Competencies</h2>
             <div class="skills-grid">
@@ -167,6 +207,7 @@
             </div>
         </section>
 
+        <!-- Experience Section -->
         <section id="experience" class="container">
             <h2 class="section-title fade-in">Professional Experience</h2>
             <div class="experience-item glass-card fade-in">
@@ -186,6 +227,38 @@
             </div>
         </section>
 
+        <!-- UPDATED EDUCATION SECTION -->
+        <section id="education" class="container">
+            <h2 class="section-title fade-in">Education</h2>
+            <div class="glass-card fade-in">
+                {% if education_entries %}
+                <table class="education-table">
+                    <thead>
+                        <tr>
+                            <th>Degree</th>
+                            <th>Institution</th>
+                            <th>Years</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in education_entries %}
+                        <tr>
+                            <td>{{ entry.degree }}</td>
+                            <td>{{ entry.institution }}</td>
+                            <td>{{ entry.start_year }} – {{ entry.end_year }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div style="text-align: center; padding: 1rem;">
+                    <p>Education details will be added soon.</p>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Projects Section -->
         <section id="projects" class="container">
             <h2 class="section-title fade-in">Featured Projects</h2>
             <div class="projects-grid">
@@ -219,7 +292,24 @@
                 </div>
             </div>
         </section>
+
+        <!-- GitHub Stats Section -->
+        <section id="github-stats" class="container">
+            <h2 class="section-title fade-in">My GitHub Activity</h2>
+            <div class="github-stats-grid fade-in">
+                <!-- Main Stats Card -->
+                <img src="https://github-readme-stats.vercel.app/api?username=tejas-p-28&show_icons=true&theme=transparent&bg_color=1a161f&title_color=ff8c42&text_color=d1c9e0&icon_color=c560ff&border_color=ffffff1a&hide_border=true&cache_seconds=86400" alt="Tejas Patil's GitHub Stats" />
+                
+                <!-- Top Languages Card -->
+                <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=tejas-p-28&layout=compact&theme=transparent&bg_color=1a161f&title_color=ff8c42&text_color=d1c9e0&border_color=ffffff1a&hide_border=true&cache_seconds=86400" alt="Tejas Patil's Top Languages" />
+            </div>
+            <div class="github-stats-grid fade-in" style="margin-top: 2rem;">
+                 <!-- Streak Stats Card -->
+                <img src="https://github-readme-streak-stats.herokuapp.com/?user=tejas-p-28&theme=transparent&background=1a161f&fire=ff8c42&ring=c560ff&currStreakNum=ffffff&sideNums=d1c9e0&sideLabels=d1c9e0&dates=d1c9e0&border=ffffff1a&hide_border=true" alt="Tejas Patil's GitHub Streak" />
+            </div>
+        </section>
         
+        <!-- Blog Section -->
         <section id="blog" class="container">
             <h2 class="section-title fade-in">From My Blog</h2>
             <div class="projects-grid">
@@ -241,6 +331,7 @@
             </div>
         </section>
 
+        <!-- Resume Section -->
         <section id="resume" class="container">
              <div class="glass-card fade-in">
                 <h2 class="section-title">My Resume</h2>
@@ -256,6 +347,7 @@
             </div>
         </section>
 
+        <!-- Contact Section -->
         <section id="contact" class="container">
             <div class="contact-content">
                 <h2 class="section-title fade-in">Let's Create Together</h2>
@@ -311,7 +403,7 @@
     </footer>
 
     <script>
-      // --- ADDED JAVASCRIPT FOR HAMBURGER MENU ---
+      // --- JAVASCRIPT FOR HAMBURGER MENU ---
       const hamburgerBtn = document.getElementById('hamburger-btn');
       const navLinksList = document.getElementById('nav-links-list');
 

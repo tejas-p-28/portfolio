@@ -1,6 +1,6 @@
 # pages/admin.py
 from django.contrib import admin
-from .models import HomePageContent, Resume, ContactSubmission
+from .models import HomePageContent, Resume, ContactSubmission, Education 
 
 class ContactSubmissionAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'submitted_at')
@@ -10,3 +10,4 @@ class ContactSubmissionAdmin(admin.ModelAdmin):
 admin.site.register(HomePageContent)
 admin.site.register(Resume)
 admin.site.register(ContactSubmission, ContactSubmissionAdmin)
+admin.site.register(Education)

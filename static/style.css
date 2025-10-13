@@ -78,6 +78,67 @@ body {
     to { background-position: 0 -10000px; }
 }
 
+.mobile-nav-controls {
+    display: none; /* Hidden by default on desktop */
+    align-items: center;
+    gap: 1rem;
+}
+
+#hamburger-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001; /* Ensure it's on top */
+}
+
+#hamburger-btn svg {
+    stroke: var(--heading-color);
+    width: 28px;
+    height: 28px;
+}
+
+@media (max-width: 992px) {
+    /* Hide the default nav links list */
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%; 
+        right: 0; /* THIS is the key property to align the container to the right */
+        /* REMOVED width: 100%; */
+        min-width: 280px; /* Give the menu a reasonable width */
+        background-color: rgba(30, 25, 35, 0.9);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        align-items: flex-start; /* Align link items to the left */
+        padding: 1rem;
+        border-bottom: 1px solid var(--glass-border);
+        border-left: 1px solid var(--glass-border);
+        border-radius: 0 0 0 15px; 
+        box-shadow: -10px 10px 30px rgba(0,0,0,0.2);
+    }
+
+    /* Hide the original counter when in mobile view */
+    .nav-links .nav-counter {
+        display: none;
+    }
+
+    /* This class is toggled by JavaScript to show the menu */
+    .nav-links.mobile-menu-open {
+        display: flex;
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: left; /* Align text to the left for readability */
+    }
+
+    /* Show the mobile controls container */
+    .mobile-nav-controls {
+        display: flex;
+    }
+}
+
 .stars {
     position: fixed;
     top: 0;

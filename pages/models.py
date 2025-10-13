@@ -27,3 +27,17 @@ class ContactSubmission(models.Model):
 
     def __str__(self):
         return f"Submission from {self.name} on {self.submitted_at.strftime('%Y-%m-%d')}"
+
+class Education(models.Model):
+    degree = models.CharField(max_length=255)
+    institution = models.CharField(max_length=255)
+    start_year = models.CharField(max_length=4)
+    end_year = models.CharField(max_length=4)
+    description = models.TextField(blank=True, null=True, help_text="Optional: Add details like honors, relevant coursework, etc.")
+    order = models.PositiveIntegerField(default=0, help_text="Order to display (e.g., 1 for first, 2 for second)")
+
+    class Meta:
+        ordering = ['order'] # Order entries by the 'order' field
+
+    def __str__(self):
+        return f"{self.degree} from {self.institution}"
