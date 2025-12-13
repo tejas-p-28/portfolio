@@ -74,6 +74,44 @@
             color: var(--heading-color);
         }
 
+        /* --- NEW STYLES FOR PROJECT FILTERING --- */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Sora', sans-serif;
+            font-weight: 600;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent-color);
+            color: var(--background);
+            box-shadow: 0 0 15px rgba(255, 140, 66, 0.3);
+            border-color: var(--accent-color);
+        }
+
+        .project-card {
+            transition: all 0.4s ease;
+            /* Needed for the hide animation */
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .project-card.hide {
+            display: none;
+        }
 
         @media (max-width: 992px) {
             .nav-links {
@@ -227,7 +265,7 @@
             </div>
         </section>
 
-        <!-- UPDATED EDUCATION SECTION -->
+        <!-- Education Section -->
         <section id="education" class="container">
             <h2 class="section-title fade-in">Education</h2>
             <div class="glass-card fade-in">
@@ -258,38 +296,35 @@
             </div>
         </section>
 
-        <!-- Projects Section -->
+        <!-- UPDATED PROJECTS SECTION WITH FILTERING -->
         <section id="projects" class="container">
             <h2 class="section-title fade-in">Featured Projects</h2>
+            
+            <!-- Filter Buttons -->
+            <div class="filter-container fade-in">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="AI">AI & ML</button>
+                <button class="filter-btn" data-filter="IOT">IoT & Hardware</button>
+                <button class="filter-btn" data-filter="DEV">Python Dev</button>
+            </div>
+
             <div class="projects-grid">
-                <div class="project-card glass-card fade-in">
-                    <h3>3D Dental Model Reconstruction with NeRF</h3>
-                    <p>Developed a computer vision pipeline to construct high-fidelity 3D dental models from 2D images. This project significantly cut down reconstruction time by 35%, providing dentists with faster, more accurate diagnostic tools.</p>
+                {% for project in projects %}
+                <div class="project-card glass-card fade-in" data-category="{{ project.category }}">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
                     <div class="tech-tags">
-                        <span class="tech-tag">Computer Vision</span><span class="tech-tag">NeRF</span><span class="tech-tag">Python</span><span class="tech-tag">3D Modeling</span>
+                        {% for tag in project.get_tech_list %}
+                            <span class="tech-tag">{{ tag }}</span>
+                        {% endfor %}
                     </div>
                 </div>
-                <div class="project-card glass-card fade-in">
-                    <h3>Generative AI for Dental Image Enhancement</h3>
-                    <p>Fine-tuned Stable Diffusion and ControlNet models to perform accurate smile corrections on dental images. Also developed a custom GAN to augment training datasets, boosting overall model accuracy by 40%.</p>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Generative AI</span><span class="tech-tag">Stable Diffusion</span><span class="tech-tag">GANs</span><span class="tech-tag">PyTorch</span>
-                    </div>
-                </div>
-                <div class="project-card glass-card fade-in">
-                    <h3>Interactive IoT Display on Raspberry Pi 5</h3>
-                    <p>Engineered a user feedback system by migrating applications to a Raspberry Pi 5 and configuring an Adafruit screen via GPIO. The system displays interactive visual cues, like animated smiles, to enhance user engagement during photo capture.</p>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Raspberry Pi 5</span><span class="tech-tag">IoT</span><span class="tech-tag">Hardware</span><span class="tech-tag">Python</span><span class="tech-tag">GPIO</span>
-                    </div>
-                </div>
-                <div class="project-card glass-card fade-in">
-                    <h3>Automated Customer Support Chatbot</h3>
-                    <p>Built and deployed an intelligent, LLM-powered chatbot that successfully automated 60% of customer queries. This system drastically reduced response times by 45% and freed up human agents to handle more complex issues.</p>
-                    <div class="tech-tags">
-                        <span class="tech-tag">LLM</span><span class="tech-tag">Chatbot</span><span class="tech-tag">Automation</span><span class="tech-tag">LangChain</span>
-                    </div>
-                </div>
+                {% empty %}
+                 <!-- Fallback content if no projects in database -->
+                 <div style="text-align: center; width: 100%; grid-column: 1 / -1;">
+                    <p>Projects will be added soon via the dashboard.</p>
+                 </div>
+                {% endfor %}
             </div>
         </section>
 
@@ -411,6 +446,42 @@
           navLinksList.classList.toggle('mobile-menu-open');
       });
 
+      // --- JAVASCRIPT FOR PROJECT FILTERING ---
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const projectCards = document.querySelectorAll('.project-card');
+
+      filterButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+              // 1. Remove active class from all buttons
+              filterButtons.forEach(b => b.classList.remove('active'));
+              // 2. Add active class to clicked button
+              btn.classList.add('active');
+              
+              const filterValue = btn.getAttribute('data-filter');
+
+              projectCards.forEach(card => {
+                  const cardCategory = card.getAttribute('data-category');
+                  
+                  if (filterValue === 'all' || filterValue === cardCategory) {
+                      card.classList.remove('hide');
+                      // Add a small timeout for the fade effect
+                      card.style.display = 'flex'; 
+                      setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1)';
+                      }, 10);
+                  } else {
+                      card.style.opacity = '0';
+                      card.style.transform = 'scale(0.95)';
+                      setTimeout(() => {
+                        card.style.display = 'none';
+                        card.classList.add('hide');
+                      }, 300); // Wait for transition
+                  }
+              });
+          });
+      });
+
       // --- Scroll Fade-in Animation ---
       const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
@@ -471,4 +542,3 @@
 
 </body>
 </html>
-

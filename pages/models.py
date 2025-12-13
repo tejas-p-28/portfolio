@@ -1,6 +1,26 @@
 # pages/models.py
 from django.db import models
 
+class Project(models.Model):
+    CATEGORY_CHOICES = [
+        ('AI', 'AI & Machine Learning'),
+        ('IOT', 'IoT & Hardware'),
+        ('DEV', 'Python Development'),
+    ]
+
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    category = models.CharField(max_length=3, choices=CATEGORY_CHOICES, default='DEV')
+    tech_stack = models.CharField(max_length=255, help_text="Comma separated tags (e.g. Python, Django, OpenCV)")
+    # Optional: Add a link field if you want to link to GitHub
+    link = models.URLField(blank=True, null=True)
+    
+    def __str__(self):
+        return self.title
+        
+    def get_tech_list(self):
+        return [tag.strip() for tag in self.tech_stack.split(',')]
+
 class HomePageContent(models.Model):
     title = models.CharField(max_length=200, default="Building the Future, One Line at a Time")
     subtitle = models.TextField(default="Creative Technologist from India...")
