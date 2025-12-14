@@ -48,7 +48,7 @@
         /* --- STYLES FOR EDUCATION TABLE --- */
         .education-table {
             width: 100%;
-            border-collapse: collapse; /* Removes space between borders */
+            border-collapse: collapse;
         }
 
         .education-table th, .education-table td {
@@ -66,7 +66,7 @@
         }
 
         .education-table tbody tr:last-child td {
-            border-bottom: none; /* Remove border from the last row */
+            border-bottom: none;
         }
 
         .education-table td:first-child { /* Degree */
@@ -104,7 +104,6 @@
 
         .project-card {
             transition: all 0.4s ease;
-            /* Needed for the hide animation */
             opacity: 1;
             transform: scale(1);
         }
@@ -113,6 +112,95 @@
             display: none;
         }
 
+        /* --- NEW CAREER TREE / TIMELINE CSS --- */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* The vertical line */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--accent-color), var(--secondary-accent));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(255, 140, 66, 0.4);
+        }
+
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+
+        /* Circles on the timeline */
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--background);
+            border: 4px solid var(--accent-color);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .left { left: 0; }
+        .right { left: 50%; }
+
+        /* Fix circle position for right side */
+        .right::after { left: -10px; }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            position: relative;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .timeline-date {
+            color: var(--secondary-accent);
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            color: var(--heading-color);
+            margin-bottom: 0.2rem;
+        }
+
+        .timeline-company {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Media Queries --- */
         @media (max-width: 992px) {
             .nav-links {
                 display: none;
@@ -131,22 +219,17 @@
                 box-shadow: -10px 10px 30px rgba(0,0,0,0.2);
             }
 
-            .nav-links .nav-counter {
-                display: none;
-            }
+            .nav-links .nav-counter { display: none; }
+            .nav-links.mobile-menu-open { display: flex; }
+            .nav-links li { width: 100%; text-align: left; }
+            .mobile-nav-controls { display: flex; }
 
-            .nav-links.mobile-menu-open {
-                display: flex;
-            }
-
-            .nav-links li {
-                width: 100%;
-                text-align: left;
-            }
-
-            .mobile-nav-controls {
-                display: flex;
-            }
+            /* --- TIMELINE MOBILE FIXES --- */
+            .timeline::after { left: 31px; } /* Move line to left */
+            .timeline-container { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-container::after { left: 21px; } /* Align dots */
+            .left::after, .right::after { left: 21px; }
+            .right { left: 0%; }
         }
     </style>
 </head>
@@ -160,10 +243,9 @@
         <nav class="container">
             <div class="logo">Tejas<span>.</span>Patil</div>
             
-            <!-- Main navigation links list -->
             <ul class="nav-links" id="nav-links-list">
                 <li><a href="#skills">Skills</a></li>
-                <li><a href="#experience">Experience</a></li>
+                <li><a href="#experience">Journey</a></li>
                 <li><a href="#education">Education</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#github-stats">GitHub</a></li>
@@ -176,7 +258,6 @@
                 <li class="nav-cta"><a href="#contact">Contact</a></li>
             </ul>
 
-            <!-- Mobile-specific controls -->
             <div class="mobile-nav-controls">
                 <div class="nav-counter">
                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -245,23 +326,32 @@
             </div>
         </section>
 
-        <!-- Experience Section -->
+        <!-- NEW CAREER TREE (Professional Journey) -->
         <section id="experience" class="container">
-            <h2 class="section-title fade-in">Professional Experience</h2>
-            <div class="experience-item glass-card fade-in">
-                <div class="experience-header">
-                    <h3>Software Developer</h3>
-                    <p>Pune | 06/2024 – Present</p>
-                </div>
-                <ul>
-                    <li>Improved ML service monitoring with Grafana, reducing downtime by 30% and accelerating issue resolution by 25%.</li>
-                    <li>Enhanced camera calibration, increasing distance accuracy by 25% and reducing false readings by 40%.</li>
-                    <li>Built 3D dental models with NeRF, cutting reconstruction time by 35% and improving patient diagnosis.</li>
-                    <li>Boosted dataset quality with a custom GAN, improving model training accuracy by 40%.</li>
-                    <li>Fine-tuned Stable Diffusion & ControlNet, increasing dental smile correction accuracy by 25%.</li>
-                    <li>Migrated applications to Raspberry Pi 5, improving processing speed by 20% and user experience.</li>
-                    <li>Built an LLM-powered chatbot, automating 60% of customer queries and reducing response time by 45%.</li>
-                </ul>
+            <h2 class="section-title fade-in">Professional Journey</h2>
+            
+            <div class="timeline">
+                {% for exp in experiences %}
+                    <div class="timeline-container {% cycle 'left' 'right' %} fade-in">
+                        <div class="timeline-content">
+                            <span class="timeline-date">
+                                {{ exp.start_date|date:"M Y" }} - 
+                                {% if exp.is_current %}
+                                    Present
+                                {% else %}
+                                    {{ exp.end_date|date:"M Y" }}
+                                {% endif %}
+                            </span>
+                            <h3 class="timeline-title">{{ exp.title }}</h3>
+                            <h4 class="timeline-company">{{ exp.company }} | {{ exp.location }}</h4>
+                            <p>{{ exp.description }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="glass-card fade-in" style="text-align: center;">
+                        <p>Experience details will be added soon.</p>
+                    </div>
+                {% endfor %}
             </div>
         </section>
 
@@ -296,11 +386,10 @@
             </div>
         </section>
 
-        <!-- UPDATED PROJECTS SECTION WITH FILTERING -->
+        <!-- Projects Section -->
         <section id="projects" class="container">
             <h2 class="section-title fade-in">Featured Projects</h2>
             
-            <!-- Filter Buttons -->
             <div class="filter-container fade-in">
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="AI">AI & ML</button>
@@ -320,7 +409,6 @@
                     </div>
                 </div>
                 {% empty %}
-                 <!-- Fallback content if no projects in database -->
                  <div style="text-align: center; width: 100%; grid-column: 1 / -1;">
                     <p>Projects will be added soon via the dashboard.</p>
                  </div>
@@ -332,14 +420,10 @@
         <section id="github-stats" class="container">
             <h2 class="section-title fade-in">My GitHub Activity</h2>
             <div class="github-stats-grid fade-in">
-                <!-- Main Stats Card -->
                 <img src="https://github-readme-stats.vercel.app/api?username=tejas-p-28&show_icons=true&theme=transparent&bg_color=1a161f&title_color=ff8c42&text_color=d1c9e0&icon_color=c560ff&border_color=ffffff1a&hide_border=true&cache_seconds=86400" alt="Tejas Patil's GitHub Stats" />
-                
-                <!-- Top Languages Card -->
                 <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=tejas-p-28&layout=compact&theme=transparent&bg_color=1a161f&title_color=ff8c42&text_color=d1c9e0&border_color=ffffff1a&hide_border=true&cache_seconds=86400" alt="Tejas Patil's Top Languages" />
             </div>
             <div class="github-stats-grid fade-in" style="margin-top: 2rem;">
-                 <!-- Streak Stats Card -->
                 <img src="https://github-readme-streak-stats.herokuapp.com/?user=tejas-p-28&theme=transparent&background=1a161f&fire=ff8c42&ring=c560ff&currStreakNum=ffffff&sideNums=d1c9e0&sideLabels=d1c9e0&dates=d1c9e0&border=ffffff1a&hide_border=true" alt="Tejas Patil's GitHub Streak" />
             </div>
         </section>
@@ -390,7 +474,6 @@
                 
                 <form method="POST" action="{% url 'home' %}#contact" id="registration-form" class="fade-in">
                     {% csrf_token %}
-                
                     {% for field in form %}
                         <div class="form-group">
                             {{ field.label_tag }}
@@ -404,7 +487,6 @@
                             {% endif %}
                         </div>
                     {% endfor %}
-                    
                     <button type="submit" class="submit-btn">Submit Inquiry</button>
                 </form>
                 
@@ -438,7 +520,6 @@
     </footer>
 
     <script>
-      // --- JAVASCRIPT FOR HAMBURGER MENU ---
       const hamburgerBtn = document.getElementById('hamburger-btn');
       const navLinksList = document.getElementById('nav-links-list');
 
@@ -446,15 +527,12 @@
           navLinksList.classList.toggle('mobile-menu-open');
       });
 
-      // --- JAVASCRIPT FOR PROJECT FILTERING ---
       const filterButtons = document.querySelectorAll('.filter-btn');
       const projectCards = document.querySelectorAll('.project-card');
 
       filterButtons.forEach(btn => {
           btn.addEventListener('click', () => {
-              // 1. Remove active class from all buttons
               filterButtons.forEach(b => b.classList.remove('active'));
-              // 2. Add active class to clicked button
               btn.classList.add('active');
               
               const filterValue = btn.getAttribute('data-filter');
@@ -464,7 +542,6 @@
                   
                   if (filterValue === 'all' || filterValue === cardCategory) {
                       card.classList.remove('hide');
-                      // Add a small timeout for the fade effect
                       card.style.display = 'flex'; 
                       setTimeout(() => {
                         card.style.opacity = '1';
@@ -476,13 +553,12 @@
                       setTimeout(() => {
                         card.style.display = 'none';
                         card.classList.add('hide');
-                      }, 300); // Wait for transition
+                      }, 300);
                   }
               });
           });
       });
 
-      // --- Scroll Fade-in Animation ---
       const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
               if (entry.isIntersecting) {
@@ -496,7 +572,6 @@
       const elementsToFadeIn = document.querySelectorAll('.fade-in');
       elementsToFadeIn.forEach(el => observer.observe(el));
 
-      // --- Interactive Card Glow Effect ---
       document.querySelectorAll('.glass-card').forEach(card => {
             card.addEventListener('mousemove', e => {
                 const rect = card.getBoundingClientRect();
@@ -507,7 +582,6 @@
             });
       });
       
-      // --- Header Scroll Effect ---
       const header = document.querySelector('header');
       window.addEventListener('scroll', () => {
           if (window.scrollY > 50) {
@@ -517,7 +591,6 @@
           }
       });
 
-      // --- UPDATED Website Visit Counter ---
       window.addEventListener('DOMContentLoaded', (event) => {
           const desktopCounter = document.getElementById('visit-counter-nav');
           const mobileCounter = document.getElementById('visit-counter-nav-mobile');

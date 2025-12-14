@@ -61,3 +61,19 @@ class Education(models.Model):
 
     def __str__(self):
         return f"{self.degree} from {self.institution}"
+    
+class Experience(models.Model):
+    title = models.CharField(max_length=200, help_text="e.g. Software Developer")
+    company = models.CharField(max_length=200, help_text="e.g. Tech Solutions Inc.")
+    location = models.CharField(max_length=200, default="Pune")
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True, help_text="Leave blank if currently working here")
+    is_current = models.BooleanField(default=False)
+    description = models.TextField(help_text="Short summary of your role and achievements.")
+    order = models.IntegerField(default=0, help_text="Higher numbers appear first")
+
+    class Meta:
+        ordering = ['-order', '-start_date']
+
+    def __str__(self):
+        return f"{self.title} at {self.company}"

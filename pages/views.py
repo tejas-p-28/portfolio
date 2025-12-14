@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
-from .models import HomePageContent, Resume, Education, Project
+from .models import HomePageContent, Resume, Education, Project, Experience 
 from blog.models import Post
 
 def home(request):
@@ -12,6 +12,7 @@ def home(request):
     resume = Resume.objects.order_by('-last_updated').first()
     education_entries = Education.objects.all().order_by('order')
     projects = Project.objects.all()
+    experiences = Experience.objects.all()
     try:
         recent_post = Post.objects.latest('publication_date')
     except Post.DoesNotExist:
@@ -51,6 +52,7 @@ def home(request):
         'recent_post': recent_post,
         'education_entries': education_entries,
         'projects': projects,
+        'experiences': experiences,
         'form': form
     }
     return render(request, 'index.html', context)
