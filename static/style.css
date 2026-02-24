@@ -1,11 +1,13 @@
 :root {
-    --background: #1a161f;
-    --text-color: #d1c9e0;
-    --heading-color: #ffffff;
-    --accent-color: #ff8c42; /* Warm Orange */
-    --secondary-accent: #c560ff; /* Magenta/Purple */
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --background: #fafbfc;
+    --text-color: #5a6c7d;
+    --heading-color: #1a2332;
+    --accent-color: #2563eb; /* Rich Blue */
+    --accent-light: #dbeafe; /* Light Blue */
+    --secondary-accent: #06b6d4; /* Teal */
+    --glass-bg: #ffffff;
+    --glass-border: #e2e8f0;
+    --success-color: #10b981;
 }
 
 #hamburger-btn {
@@ -61,15 +63,20 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 100px;
 }
 
 body {
     font-family: 'Sora', sans-serif;
     background-color: var(--background);
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+    background-attachment: fixed;
     color: var(--text-color);
     line-height: 1.8;
     overflow-x: hidden;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 /* --- Animated Starfield Background --- */
@@ -107,15 +114,15 @@ body {
         right: 0; /* THIS is the key property to align the container to the right */
         /* REMOVED width: 100%; */
         min-width: 280px; /* Give the menu a reasonable width */
-        background-color: rgba(30, 25, 35, 0.9);
-        backdrop-filter: blur(15px);
+        background-color: #ffffff;
+        backdrop-filter: none;
         flex-direction: column;
         align-items: flex-start; /* Align link items to the left */
         padding: 1rem;
         border-bottom: 1px solid var(--glass-border);
         border-left: 1px solid var(--glass-border);
-        border-radius: 0 0 0 15px; 
-        box-shadow: -10px 10px 30px rgba(0,0,0,0.2);
+        border-radius: 0 0 0 8px; 
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     /* Hide the original counter when in mobile view */
@@ -148,6 +155,7 @@ body {
     z-index: -1;
     background-repeat: repeat;
     will-change: background-position;
+    display: none;
 }
 
 #stars1 {
@@ -218,15 +226,17 @@ header {
     width: 100%;
     top: 0;
     z-index: 1000;
-    background: rgba(26, 22, 31, 0.5); 
+    background: rgba(250, 251, 252, 0.8);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--glass-border);
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
 }
 
 header.scrolled {
-    background: rgba(26, 22, 31, 0.7);
+    background: rgba(250, 251, 252, 0.95);
     backdrop-filter: blur(12px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
 }
 
 nav {
@@ -277,17 +287,17 @@ nav {
     content: '';
     position: absolute;
     width: 100%;
-    height: 3px;
+    height: 2px;
     bottom: 5px;
     left: 0;
-    background: linear-gradient(90deg, var(--accent-color), var(--secondary-accent));
+    background: var(--accent-color);
     transform: scaleX(0);
     transform-origin: right;
-    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: transform 0.3s ease;
 }
 
 .nav-links li:not(.nav-cta):not(.nav-counter) a:hover {
-    color: var(--heading-color);
+    color: var(--accent-color);
 }
 
 .nav-links li:not(.nav-cta):not(.nav-counter) a:hover::after {
@@ -296,18 +306,20 @@ nav {
 }
 
 .nav-cta a {
-    background: transparent;
-    border: 2px solid var(--accent-color);
-    border-radius: 99px;
+    background: linear-gradient(135deg, var(--accent-color), var(--secondary-accent));
+    border: 2px solid transparent;
+    border-radius: 8px;
     padding: 0.6rem 1.5rem;
+    color: #ffffff;
     transition: all 0.3s ease;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
 .nav-cta a:hover {
-    color: var(--heading-color);
-    background-image: linear-gradient(90deg, var(--accent-color), var(--secondary-accent));
-    border-color: transparent;
-    box-shadow: 0 0 20px rgba(255, 140, 66, 0.5);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
 }
 
 .nav-counter {
@@ -347,10 +359,11 @@ nav {
     font-size: 4.5rem;
     line-height: 1.1;
     margin-bottom: 1.5rem;
-    background: linear-gradient(90deg, var(--heading-color), var(--accent-color));
+    background: linear-gradient(135deg, var(--heading-color), var(--accent-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 2px 20px rgba(26, 22, 31, 0.5);
+    background-clip: text;
+    font-weight: 800;
 }
 
 .hero-subtitle {
@@ -373,7 +386,7 @@ nav {
     height: auto;
     border-radius: 20px;
     animation: float-animation 6s ease-in-out infinite;
-    box-shadow: 0 0 50px rgba(255, 140, 66, 0.2), 0 0 80px rgba(26, 22, 31, 0.5);
+    box-shadow: 0 20px 40px rgba(37, 99, 235, 0.2);
 }
 
 @keyframes float-animation {
@@ -384,46 +397,45 @@ nav {
 
 .cta-button {
     display: inline-block;
-    background: transparent;
-    color: var(--accent-color);
+    background: linear-gradient(135deg, var(--accent-color), var(--secondary-accent));
+    color: #ffffff;
     padding: 1rem 2.5rem;
-    border: 2px solid var(--accent-color);
-    border-radius: 50px;
+    border: 2px solid transparent;
+    border-radius: 10px;
     font-weight: 600;
     text-decoration: none;
     transition: all 0.3s ease;
-    box-shadow: 0 0 15px rgba(255, 140, 66, 0.2);
+    box-shadow: 0 8px 16px rgba(37, 99, 235, 0.25);
 }
 
 .cta-button:hover {
-    background-color: var(--accent-color);
-    color: var(--background);
-    box-shadow: 0 0 25px var(--accent-color);
     transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.35);
 }
 
 .cta-button.secondary {
     background: transparent;
-    color: var(--text-color);
-    border-color: var(--glass-border);
+    color: var(--accent-color);
+    border-color: var(--accent-color);
     box-shadow: none;
 }
 .cta-button.secondary:hover {
-    background-color: var(--glass-bg);
+    background-color: var(--accent-light);
     border-color: var(--accent-color);
     color: var(--accent-color);
-    box-shadow: 0 0 25px rgba(255, 140, 66, 0.2);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
 }
 
 .glass-card {
     background: var(--glass-bg);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(8px);
     border: 1px solid var(--glass-border);
-    border-radius: 20px;
+    border-radius: 16px;
     padding: 2.5rem;
-    transition: all 0.4s ease;
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .glass-card::before {
@@ -433,9 +445,9 @@ nav {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(255, 140, 66, 0.15), transparent 40%);
+    background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(37, 99, 235, 0.1), transparent 40%);
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.3s ease;
     pointer-events: none;
 }
 
@@ -444,15 +456,20 @@ nav {
 }
 
 .glass-card:hover {
-    border-color: rgba(255, 140, 66, 0.5);
-    box-shadow: 0 0 40px rgba(255, 140, 66, 0.1);
-    transform: translateY(-5px);
+    border-color: var(--accent-color);
+    box-shadow: 0 12px 32px rgba(37, 99, 235, 0.15);
+    transform: translateY(-8px);
 }
 
 .section-title {
     text-align: center;
     font-size: 2.8rem;
     margin-bottom: 5rem;
+    background: linear-gradient(135deg, var(--heading-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
 }
 
 .skills-grid {
@@ -465,6 +482,7 @@ nav {
     font-size: 1.3rem;
     margin-bottom: 0.75rem;
     color: var(--accent-color);
+    font-weight: 700;
 }
 
 .skill-card p {
@@ -537,12 +555,13 @@ nav {
 }
 
 .tech-tag {
-    background-color: rgba(255, 140, 66, 0.1);
+    background-color: var(--accent-light);
     color: var(--accent-color);
     padding: 0.5rem 1.2rem;
-    border-radius: 20px;
+    border-radius: 6px;
     font-size: 0.9rem;
     font-weight: 600;
+    border: 1px solid rgba(37, 99, 235, 0.2);
 }
 
 #resume .glass-card {
@@ -651,7 +670,7 @@ nav {
 
 /* --- FOOTER STYLES --- */
 footer {
-    background-color: #141118;
+    background: linear-gradient(180deg, rgba(250, 251, 252, 0) 0%, rgba(37, 99, 235, 0.05) 100%);
     padding: 4rem 0 2rem;
     text-align: center;
     border-top: 1px solid var(--glass-border);
