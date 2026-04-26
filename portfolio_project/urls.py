@@ -1,6 +1,6 @@
 # portfolio_project/urls.py
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings # New
 from django.conf.urls.static import static # New
 
@@ -11,6 +11,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', pages_views.home, name='home'), # UPDATED
     path('blogs/', blog_views.post_list, name='blog_list'),
+    path('chatbot/', include('chatbot.urls')),
 ]
 
 # This is for serving user-uploaded files (like your resume and hero image) during development

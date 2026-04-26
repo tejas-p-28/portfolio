@@ -51,6 +51,10 @@ INSTALLED_APPS = [
     "blog",
     'pages',
 ]
+# Register chatbot app
+INSTALLED_APPS += [
+    'chatbot',
+]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

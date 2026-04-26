@@ -1,0 +1,12 @@
+{
+  "questions": [
+    {
+      "question": "What is your name?",
+      "answer": "My name is [Your Name]."
+    },
+    {
+      "question": "What is your profession?",
+      "answer": "I am a web developer and designer."
+    }
+  ]
+}
